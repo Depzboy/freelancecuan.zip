@@ -1,0 +1,210 @@
+// Version: 4.0.0
+type AccessControlState__945869781 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__386906547<Principal, UserRole__284522038>
+  };
+type ActivityHistory__1072278732 =
+  {
+    amount : Nat;
+    at : Nat;
+    id : Nat;
+    kind : ActivityType__656904385;
+    owner : Principal;
+    title : Text
+  };
+type ActivityHistory__228138981 =
+  {
+    amount : Nat;
+    at : Timestamp__301639476;
+    id : Nat;
+    kind : ActivityType__1033789510;
+    owner : Principal;
+    title : Text
+  };
+type ActivityType__1033789510 = {#job; #penarikan; #tugas};
+type ActivityType__656904385 = {#job; #penarikan; #tugas};
+type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
+type Internal__161573640<K, V> =
+  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
+type Job__181122042 =
+  {
+    category : RewardType__848277223;
+    description : Text;
+    id : Nat;
+    reward : Nat;
+    title : Text
+  };
+type Job__474212462 =
+  {
+    category : RewardType__276479463;
+    description : Text;
+    id : Nat;
+    reward : Nat;
+    title : Text
+  };
+type LeaderboardEntry__521666677 = {rank : Nat; score : Nat; username : Text};
+type LeaderboardEntry__898995612 = {rank : Nat; score : Nat; username : Text};
+type LeaderboardPeriod__379891978 =
+  {
+    entries : [LeaderboardEntry__521666677];
+    periodLabel : Text;
+    prizes : [Nat]
+  };
+type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
+type List__1004628775<T> =
+  {
+    var blockIndex : Nat__58649523;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__58649523
+  };
+type List__89170296<T> = List__1004628775<T>;
+type Map__13625999<K, V> =
+  {var root : Node__430031793<K, V>; var size : Nat__58649523};
+type Map__386906547<K, V> = Map__670138087<K, V>;
+type Map__670138087<K, V> = Map__13625999<K, V>;
+type Nat__58649523 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__1055154095 =
+  {
+    accessControlState : AccessControlState__945869781;
+    history : List__89170296<ActivityHistory__1072278732>;
+    jobs : List__89170296<Job__474212462>;
+    leaderboard : LeaderboardPeriod__379891978;
+    nextHistoryId : {var next : Nat};
+    nextTaskId : {var next : Nat};
+    nextWithdrawalId : {var next : Nat};
+    profiles : Map__386906547<Principal, UserProfile__331464251>;
+    tasks : List__89170296<Task__193969341>;
+    wallets : Map__386906547<Principal, Wallet__307209603>;
+    withdrawals : List__89170296<Withdrawal__362919454>
+  };
+type Node__430031793<K, V> =
+  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
+type OldActor__557239299 = {};
+type RewardType__276479463 = {#emailBebas; #emailKhusus};
+type RewardType__848277223 = {#emailBebas; #emailKhusus};
+type TaskStatus__120192620 = {#diterima; #pending};
+type TaskStatus__537038292 = {#diterima; #pending};
+type Task__193969341 =
+  {
+    category : RewardType__276479463;
+    createdAt : Nat;
+    id : Nat;
+    jobId : Nat;
+    owner : Principal;
+    reward : Nat;
+    var status : TaskStatus__120192620
+  };
+type Task__204788874 =
+  {
+    category : RewardType__848277223;
+    createdAt : Timestamp__301639476;
+    id : Nat;
+    jobId : Nat;
+    owner : Principal;
+    reward : Nat;
+    var status : TaskStatus__537038292
+  };
+type Timestamp__301639476 = Nat;
+type UserProfile__232521516 =
+  {
+    var email : ?Text;
+    var name : Text;
+    principal : Principal;
+    var role : RewardType__848277223
+  };
+type UserProfile__331464251 =
+  {
+    var email : ?Text;
+    var name : Text;
+    principal : Principal;
+    var role : RewardType__276479463
+  };
+type UserRole__284522038 = {#admin; #guest; #user};
+type UserRole__91647283 = {#admin; #guest; #user};
+type Wallet__307209603 =
+  {
+    owner : Principal;
+    var rewardEmailBebas : Nat;
+    var rewardEmailKhusus : Nat
+  };
+type Wallet__353364024 =
+  {
+    owner : Principal;
+    var rewardEmailBebas : Nat;
+    var rewardEmailKhusus : Nat
+  };
+type WithdrawalStatus__177126800 = {#diajukan; #diproses; #selesai};
+type WithdrawalStatus__472456544 = {#diajukan; #diproses; #selesai};
+type Withdrawal__362919454 =
+  {
+    at : Nat;
+    id : Nat;
+    method : Text;
+    nominal : Nat;
+    owner : Principal;
+    var status : WithdrawalStatus__472456544
+  };
+type Withdrawal__409952410 =
+  {
+    at : Timestamp__301639476;
+    id : Nat;
+    method : Text;
+    nominal : Nat;
+    owner : Principal;
+    var status : WithdrawalStatus__177126800
+  };
+{
+  "20260815_000000" : (old : OldActor__557239299) -> NewActor__1055154095
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__386906547<Principal, UserRole__91647283>
+    };
+  stable history :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?ActivityHistory__228138981]];
+      var elementIndex : Nat__58649523
+    };
+  stable jobs :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?Job__181122042]];
+      var elementIndex : Nat__58649523
+    };
+  stable leaderboard :
+    {
+      entries : [LeaderboardEntry__898995612];
+      periodLabel : Text;
+      prizes : [Nat]
+    };
+  stable nextHistoryId : {var next : Nat};
+  stable nextTaskId : {var next : Nat};
+  stable nextWithdrawalId : {var next : Nat};
+  stable profiles :
+    {
+      var root : Node__430031793<Principal, UserProfile__232521516>;
+      var size : Nat__58649523
+    };
+  stable tasks :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?Task__204788874]];
+      var elementIndex : Nat__58649523
+    };
+  stable wallets :
+    {
+      var root : Node__430031793<Principal, Wallet__353364024>;
+      var size : Nat__58649523
+    };
+  stable withdrawals :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?Withdrawal__409952410]];
+      var elementIndex : Nat__58649523
+    }
+};

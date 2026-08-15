@@ -1,0 +1,22 @@
+{
+  "overview": "Platform freelance Indonesia untuk menghasilkan uang dengan dashboard saldo, leaderboard mingguan, dan navigasi 6 tab.",
+  "features": [
+    "Login dengan Internet Identity (email terverifikasi)",
+    "Dashboard Beranda dengan kartu saldo dan leaderboard mingguan",
+    "Halaman Job dengan daftar pekerjaan",
+    "Halaman Tugas dengan status pengerjaan",
+    "Halaman Riwayat aktivitas",
+    "Halaman Saldo dengan rincian wallet",
+    "Halaman Profil dengan statistik pengguna",
+    "Navigasi bawah 6 tab dan ikon chat mengambang"
+  ],
+  "category": "productivity",
+  "tags": [
+    "freelance",
+    "indonesia",
+    "dashboard",
+    "earning",
+    "mobile-first"
+  ],
+  "last_updated": "2026-08-15T16:13:01.886Z"
+}

@@ -1,0 +1,176 @@
+type WithdrawalView = 
+ record {
+   at: Timestamp;
+   id: nat;
+   method: text;
+   nominal: nat;
+   owner: text;
+   status: WithdrawalStatus;
+ };
+type WithdrawalStatus = 
+ variant {
+   diajukan;
+   diproses;
+   selesai;
+ };
+type WalletView = 
+ record {
+   owner: text;
+   rewardEmailBebas: nat;
+   rewardEmailKhusus: nat;
+   total: nat;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfileView = 
+ record {
+   email: opt text;
+   name: text;
+   "principal": text;
+ };
+type Timestamp = nat;
+type TaskView = 
+ record {
+   category: RewardType;
+   createdAt: Timestamp;
+   id: nat;
+   jobId: nat;
+   owner: text;
+   reward: nat;
+   status: TaskStatus;
+ };
+type TaskStatus = 
+ variant {
+   diterima;
+   pending;
+ };
+type RewardType = 
+ variant {
+   emailBebas;
+   emailKhusus;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type LeaderboardPeriod = 
+ record {
+   entries: vec LeaderboardEntry;
+   periodLabel: text;
+   prizes: vec nat;
+ };
+type LeaderboardEntry = 
+ record {
+   rank: nat;
+   score: nat;
+   username: text;
+ };
+type Job = 
+ record {
+   category: RewardType;
+   description: text;
+   id: nat;
+   reward: nat;
+   title: text;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type ActivityType = 
+ variant {
+   job;
+   penarikan;
+   tugas;
+ };
+type ActivityHistoryView = 
+ record {
+   amount: nat;
+   at: Timestamp;
+   id: nat;
+   kind: ActivityType;
+   owner: text;
+   title: text;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  completeTask: (id: nat) -> (opt TaskView);
+  execute: (qJson: text) -> (Result) query;
+  getCallerProfile: () -> (opt UserProfileView) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getHomeSummary: () ->
+   (record {
+      diterimaCount: nat;
+      pendingCount: nat;
+      rewardEmailBebas: nat;
+      rewardEmailKhusus: nat;
+      saldo: nat;
+    }) query;
+  getJob: (id: nat) -> (opt Job) query;
+  getMyProfileStats: () ->
+   (record {
+      currentRank: nat;
+      totalJobsCompleted: nat;
+      totalRewardEarned: nat;
+    }) query;
+  getMyTask: (id: nat) -> (opt TaskView) query;
+  getMyWallet: () -> (WalletView) query;
+  getWeeklyLeaderboard: () -> (LeaderboardPeriod) query;
+  isCallerAdmin: () -> (bool) query;
+  listJobs: () -> (vec Job) query;
+  listJobsByCategory: (category: RewardType) -> (vec Job) query;
+  listMyHistory: () -> (vec ActivityHistoryView) query;
+  listMyHistoryByKind: (kind: ActivityType) ->
+   (vec ActivityHistoryView) query;
+  listMyTasks: () -> (vec TaskView) query;
+  listMyWithdrawals: () -> (vec WithdrawalView) query;
+  requestWithdrawal: (nominal: nat, method: text) -> (WithdrawalView);
+  schema: () -> (text) query;
+  takeJob: (jobId: nat) -> (opt TaskView);
+  updateCallerName: (name: text) -> (UserProfileView);
+}
